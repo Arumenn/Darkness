@@ -4,11 +4,21 @@ using UnityEngine;
 
 public class MiniMap : MonoBehaviour {
 
+    Light light;
+
+    private void Start() {
+        light = GetComponentInChildren<Light>();
+    }
+
     private void OnPreCull() {
-        GetComponentInChildren<Light>().enabled = true;
+        if (light != null) {
+            light.enabled = true;
+        }
     }
 
     private void OnPostRender() {
-        GetComponentInChildren<Light>().enabled = false;
+        if (light != null) {
+            light.enabled = false;
+        }
     }
 }
