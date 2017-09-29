@@ -16,8 +16,6 @@ public class PlayerMovement : MonoBehaviour
     Vector3 clickPoint;
     GameObject walkTarget;
 
-    bool isInDirectMode = false;
-
     // TODO solve fight between serialize and const
     [SerializeField] const int walkableLayerNumber = 8;
     [SerializeField] const int enemyLayerNumber = 9;

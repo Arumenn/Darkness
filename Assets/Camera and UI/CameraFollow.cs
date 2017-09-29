@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
 
+    [SerializeField] bool minimapMode = false;
     GameObject player;
 
 	void Start () {
@@ -11,6 +12,11 @@ public class CameraFollow : MonoBehaviour {
 	}
 
     private void LateUpdate() {
-        transform.position = player.transform.position;
+        if (minimapMode) {
+            Vector3 newPos = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
+            transform.position = newPos;
+        } else {
+            transform.position = player.transform.position;
+        }
     }
 }
