@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.ThirdPerson;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : MonoBehaviour, IDamageable {
 
     [SerializeField] float maxHealthPoints = 100f;
     [SerializeField] float attackRadius = 4f;
@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour {
     void Start() {
         player = GameObject.FindGameObjectWithTag("Player");
         aICharacterControl = GetComponent<AICharacterControl>();
+        currentHealthPoints = maxHealthPoints;
     }
 
     // Update is called once per frame
@@ -34,5 +35,9 @@ public class Enemy : MonoBehaviour {
         } else {
             aICharacterControl.SetTarget(transform);
         }
+    }
+
+    public void TakeDamage(float damage) {
+        currentHealthPoints = Mathf.Clamp(currentHealthPoints - damage, 0f, maxHealthPoints);
     }
 }
