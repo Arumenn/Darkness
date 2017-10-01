@@ -55,6 +55,7 @@ public class Enemy : MonoBehaviour, IDamageable {
     }
 
     void SpawnProjectile() {
+        transform.LookAt(player.transform); //make sure we look at the player
         //instantiate projectile
         GameObject newProjectile = Instantiate(projectileToUse, projectileSocket.transform.position, Quaternion.identity);
         Projectile projectileComponent = newProjectile.GetComponent<Projectile>();
