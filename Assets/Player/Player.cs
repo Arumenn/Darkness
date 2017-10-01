@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable {
 
+    [SerializeField] int level = 8;
     [SerializeField] float maxHealthPoints = 100f;
     [SerializeField] float damagePerHit = 10f;
     [SerializeField] float minTimeBetweenHits = 0.5f;
