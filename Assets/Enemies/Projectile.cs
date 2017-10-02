@@ -22,11 +22,11 @@ public class Projectile : MonoBehaviour {
         timeBorn = Time.time;
     }
 
-    private void OnTriggerEnter(Collider collider) {
-        var damageable = collider.gameObject.GetComponent(typeof(IDamageable));
+    private void OnCollisionEnter(Collision collision) {
+        var damageable = collision.gameObject.GetComponent(typeof(IDamageable));
         if (damageable) {
             (damageable as IDamageable).TakeDamage(damage);
-            Destroy(gameObject);
         }
+        Destroy(gameObject);
     }
 }
