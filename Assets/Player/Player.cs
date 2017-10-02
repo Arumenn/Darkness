@@ -38,6 +38,7 @@ public class Player : MonoBehaviour, IDamageable {
             var enemyComponent = enemy.GetComponent<Enemy>();
             //do damage
             if (Time.time - lastHitTime > minTimeBetweenHits) {
+                transform.LookAt(enemy.transform);
                 enemyComponent.TakeDamage(damagePerHit);
                 lastHitTime = Time.time;
             }

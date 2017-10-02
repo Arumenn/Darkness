@@ -13,7 +13,6 @@ public class Projectile : MonoBehaviour {
 
     private void LateUpdate() {
         if (Time.time - timeBorn >= timeToLive) {
-            print("dead projectile");
             Destroy(gameObject);
         }
     }
@@ -21,13 +20,13 @@ public class Projectile : MonoBehaviour {
     public void SetDamage(float d) {
         damage = d;
         timeBorn = Time.time;
-        print("new projectile");
     }
 
     private void OnTriggerEnter(Collider collider) {
         var damageable = collider.gameObject.GetComponent(typeof(IDamageable));
         if (damageable) {
             (damageable as IDamageable).TakeDamage(damage);
+            Destroy(gameObject);
         }
     }
 }
