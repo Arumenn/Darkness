@@ -12,7 +12,6 @@ public class PlayerMovement : MonoBehaviour
     CameraRaycaster cameraRaycaster = null;
     AICharacterControl aICharacterControl = null;
 
-    Vector3 currentDestination;
     Vector3 clickPoint;
     GameObject walkTarget;
 
@@ -26,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
         cameraRaycaster = Camera.main.GetComponent<CameraRaycaster>();
         player = GetComponent<ThirdPersonCharacter>();
         aICharacterControl = GetComponent<AICharacterControl>();
-        currentDestination = transform.position;
 
         cameraRaycaster.notifyMouseClickObservers += ProcessMouseClick; //attach event listener
         walkTarget = new GameObject("walkTarget");

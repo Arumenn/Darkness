@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,9 @@ public class Player : MonoBehaviour, IDamageable {
     [SerializeField] float damagePerHit = 10f;
     [SerializeField] float minTimeBetweenHits = 0.5f;
     [SerializeField] float maxAttackRange = 2f;
+
+    [SerializeField] Weapon weaponInUse;
+    [SerializeField] GameObject weaponSocket;
 
     float currentHealthPoints;
     GameObject currentTarget;
@@ -23,6 +27,18 @@ public class Player : MonoBehaviour, IDamageable {
 
     void Start() {
         currentHealthPoints = maxHealthPoints;
+        RegisterForMouseClick();
+        PutWeaponInHand();
+    }
+
+    private void PutWeaponInHand() {
+        var weaponPrefab = weaponInUse.GetWeaponPrefab();
+        var weapon = Instantiate(weaponPrefab, weaponSocket.transform);
+        weapon.transform.localPosition = weaponInUse.gripTransform.localPosition;
+        weapon.transform.localRotation = weaponInUse.gripTransform.localRotation;
+    }
+
+    private void RegisterForMouseClick() {
         cameraRaycaster = FindObjectOfType<CameraRaycaster>();
         cameraRaycaster.notifyMouseClickObservers += OnMouseClick;
     }
@@ -38,7 +54,7 @@ public class Player : MonoBehaviour, IDamageable {
             var enemyComponent = enemy.GetComponent<Enemy>();
             //do damage
             if (Time.time - lastHitTime > minTimeBetweenHits) {
-                transform.LookAt(enemy.transform);
+                transform.LookAt(currentTarget.transform);
                 enemyComponent.TakeDamage(damagePerHit);
                 lastHitTime = Time.time;
             }
