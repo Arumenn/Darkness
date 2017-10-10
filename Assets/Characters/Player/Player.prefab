@@ -856,7 +856,6 @@ MonoBehaviour:
   minTimeBetweenHits: 1
   maxAttackRange: 2
   weaponInUse: {fileID: 11400000, guid: 08fe8d601c5df64418a67d2bebe1fa0a, type: 2}
-  weaponSocket: {fileID: 1262174139271122}
 --- !u!114 &114780421226687874
 MonoBehaviour:
   m_ObjectHideFlags: 1

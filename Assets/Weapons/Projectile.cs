@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
 
-    public float projectileSpeed = 10f;
+    [SerializeField] float projectileSpeed = 10f;
     private float damage = 5f;
 
+    GameObject shooter;
+
     //projectile lifetime
-    private float timeToLive = 5f;
+    private const float TIME_TO_LIVE = 5f;
     private float timeBorn = 0f;
 
     private void LateUpdate() {
-        if (Time.time - timeBorn >= timeToLive) {
+        if (Time.time - timeBorn >= TIME_TO_LIVE) {
             Destroy(gameObject);
         }
     }
@@ -22,11 +24,26 @@ public class Projectile : MonoBehaviour {
         timeBorn = Time.time;
     }
 
+    public void SetShooter(GameObject shooter) {
+        this.shooter = shooter;
+    }
+
+    public float GetDefaultLaunchSpeed() {
+        return projectileSpeed;
+    }
+
     private void OnCollisionEnter(Collision collision) {
+        var layerCollidedWith = collision.gameObject.layer;
+        if (layerCollidedWith != shooter.layer) {
+            DoDamage(collision);
+        }
+        Destroy(gameObject);
+    }
+
+    private void DoDamage(Collision collision) {
         var damageable = collision.gameObject.GetComponent(typeof(IDamageable));
         if (damageable) {
             (damageable as IDamageable).TakeDamage(damage);
         }
-        Destroy(gameObject);
     }
 }
