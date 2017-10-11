@@ -15,5 +15,9 @@ namespace RPG.Weapons {
             return weaponPrefab;
         }
 
+        public AnimationClip GetAttackAnimation() {
+            return attackAnimation;
+        }
+
     }
 }
