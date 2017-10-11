@@ -2,23 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiniMap : MonoBehaviour {
+namespace RPG.CameraUI {
+    public class MiniMap : MonoBehaviour {
 
-    Light lLight;
+        Light lLight;
 
-    private void Start() {
-        lLight = GetComponentInChildren<Light>();
-    }
-
-    private void OnPreCull() {
-        if (lLight != null) {
-            lLight.enabled = true;
+        private void Start() {
+            lLight = GetComponentInChildren<Light>();
         }
-    }
 
-    private void OnPostRender() {
-        if (lLight != null) {
-            lLight.enabled = false;
+        private void OnPreCull() {
+            if (lLight != null) {
+                lLight.enabled = true;
+            }
+        }
+
+        private void OnPostRender() {
+            if (lLight != null) {
+                lLight.enabled = false;
+            }
         }
     }
 }
