@@ -22641,7 +22641,7 @@ Prefab:
         type: 2}
       propertyPath: weaponInUse
       value: 
-      objectReference: {fileID: 11400000, guid: 1beda93409415c844bda2683c0a49a31,
+      objectReference: {fileID: 11400000, guid: 36e6d46b3f1d1424088578d83310847f,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 439d9f7468b775648823b1d6bb98a409, type: 2}

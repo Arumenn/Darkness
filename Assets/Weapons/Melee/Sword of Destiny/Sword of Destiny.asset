@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c8bf989ac5f41148b953cfaa98ab838, type: 3}
-  m_Name: Rod_of_Death
+  m_Name: Sword of Destiny
   m_EditorClassIdentifier: 
-  gripTransform: {fileID: 4940140664961736, guid: 87981b0901c856c4481aa5a94bc3b8fb,
+  gripTransform: {fileID: 4940140664961736, guid: 9b6315ad076e9fd4dac73805d728402a,
     type: 2}
-  weaponPrefab: {fileID: 1860056630412356, guid: c04a0033bf206264aac3a210fcaa8dd7,
+  weaponPrefab: {fileID: 1277290872445230, guid: 0982ce6c23f616d4bae4c222799510a6,
     type: 2}
-  attackAnimation: {fileID: 7400000, guid: fcd5d479f75a6b44595e56fa981bdda4, type: 3}
-  minTimeBetweenHits: 0.5
+  attackAnimation: {fileID: 7400000, guid: d82669b37833c5f4db716b82428a5ad6, type: 3}
+  minTimeBetweenHits: 2
   maxAttackRange: 3
