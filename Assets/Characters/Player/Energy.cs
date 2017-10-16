@@ -18,7 +18,7 @@ namespace RPG.Characters {
         // Use this for initialization
         void Start() {
             cameraRaycaster = Camera.main.GetComponent<CameraRaycaster>();
-            cameraRaycaster.notifyMouseRightClickObservers += ProcessRightClick;
+            cameraRaycaster.onMouseOverEnemy += OnMouseOverEnemy;
 
             currentEnergyPoints = maxEnergyPoints;
         }
@@ -32,9 +32,11 @@ namespace RPG.Characters {
             energyBarRawImage.uvRect = new Rect(xValue, 0f, 0.5f, 1f);
         }
 
-        void ProcessRightClick(RaycastHit raycastHit, int layerHit) {
-            float newEnergyPoints = currentEnergyPoints - pointsPerHit;
-            currentEnergyPoints = Mathf.Clamp(newEnergyPoints, 0, maxEnergyPoints);
+        void OnMouseOverEnemy(Enemy enemy) {
+            if (Input.GetMouseButtonDown(1)) {
+                float newEnergyPoints = currentEnergyPoints - pointsPerHit;
+                currentEnergyPoints = Mathf.Clamp(newEnergyPoints, 0, maxEnergyPoints);
+            }
         }
 
         float EnergyAsPercent() {

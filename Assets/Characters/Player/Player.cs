@@ -20,7 +20,6 @@ namespace RPG.Characters {
         float currentHealthPoints;
         CameraRaycaster cameraRaycaster;
         float lastHitTime = 0f;
-        const int ENEMY_LAYER = 9;
 
         public float healthAsPercentage {
             get {
@@ -69,16 +68,12 @@ namespace RPG.Characters {
 
         private void RegisterForMouseClick() {
             cameraRaycaster = FindObjectOfType<CameraRaycaster>();
-            cameraRaycaster.notifyMouseClickObservers += OnMouseClick;
+            cameraRaycaster.onMouseOverEnemy += OnMouseOverEnemy;
         }
 
-        void OnMouseClick(RaycastHit raycastHit, int layerHit) {
-            if (layerHit == ENEMY_LAYER) {
-                var enemy = raycastHit.collider.gameObject;
-
-                if (IsTargetInRange(enemy)) {
-                    AttackTarget(enemy);
-                }               
+        void OnMouseOverEnemy(Enemy enemy) {
+            if ((Input.GetMouseButton(0)) && (IsTargetInRange(enemy.gameObject))) {
+                AttackTarget(enemy);
             }
         }
 
@@ -87,13 +82,12 @@ namespace RPG.Characters {
             return distanceToTarget <= weaponInUse.GetMaxAttackRange();
         }
 
-        private void AttackTarget(GameObject target) {
-            var enemyComponent = target.GetComponent<Enemy>();
+        private void AttackTarget(Enemy enemy) {
             //do damage
             if (Time.time - lastHitTime > weaponInUse.GetMinTimeBetweenHits()) {
-                transform.LookAt(target.transform);
+                transform.LookAt(enemy.transform);
                 animator.SetTrigger("Attack"); //TODO make const
-                enemyComponent.TakeDamage(damagePerHit);
+                enemy.TakeDamage(damagePerHit);
                 lastHitTime = Time.time;
             }
         }        

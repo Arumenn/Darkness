@@ -15,35 +15,29 @@ namespace RPG.Characters {
         Vector3 clickPoint;
         GameObject walkTarget;
 
-        // TODO solve fight between serialize and const
-        [SerializeField] const int walkableLayerNumber = 8;
-        [SerializeField] const int enemyLayerNumber = 9;
-        [SerializeField] const int stiffLayerNumber = 12;
-
         void Start() {
             cameraRaycaster = Camera.main.GetComponent<CameraRaycaster>();
             player = GetComponent<ThirdPersonCharacter>();
             aICharacterControl = GetComponent<AICharacterControl>();
 
-            cameraRaycaster.notifyMouseClickObservers += ProcessMouseClick; //attach event listener
+            cameraRaycaster.onMouseOverWalkable += OnMouseOverWalkable;
+            cameraRaycaster.onMouseOverEnemy += OnMouseOverEnemy;
+
             walkTarget = new GameObject("walkTarget");
         }
 
-        void ProcessMouseClick(RaycastHit raycastHit, int layerHit) {
-            switch (layerHit) {
-                case enemyLayerNumber:
-                    //navigate to enemy
-                    GameObject enemy = raycastHit.collider.gameObject;
-                    aICharacterControl.SetTarget(enemy.transform);
-                    break;
-                case walkableLayerNumber:
-                    //navigate to point on the ground
-                    walkTarget.transform.position = raycastHit.point;
-                    aICharacterControl.SetTarget(walkTarget.transform);
-                    break;
-                default:
-                    Debug.LogWarning("Don't know how to handle mouse click for player movement");
-                    return;
+        void OnMouseOverWalkable(Vector3 destination) {
+            if (Input.GetMouseButton(0)) {
+                walkTarget.transform.position = destination;
+                aICharacterControl.SetTarget(walkTarget.transform);
+            }
+        }
+
+        void OnMouseOverEnemy(Enemy enemy) {
+            if ((Input.GetMouseButton(0)) || (Input.GetMouseButtonDown(1))) {
+                //walk to enemy
+                walkTarget.transform.position = enemy.transform.position;
+                aICharacterControl.SetTarget(walkTarget.transform);
             }
         }
 
