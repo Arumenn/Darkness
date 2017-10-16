@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace RPG.CameraUI {
     public class CameraRaycaster : MonoBehaviour {
         // INSPECTOR PROPERTIES RENDERED BY CUSTOM EDITOR SCRIPT
-        [SerializeField] int[] layerPriorities;
+        [SerializeField] int[] layerPriorities = null;
 
         float maxRaycastDepth = 100f; // Hard coded value
         int topPriorityLayerLastFrame = -1; // So get ? from start with Default layer terrain
@@ -17,6 +17,9 @@ namespace RPG.CameraUI {
 
         public delegate void OnClickPriorityLayer(RaycastHit raycastHit, int layerHit); // declare new delegate type
         public event OnClickPriorityLayer notifyMouseClickObservers; // instantiate an observer set
+
+        public delegate void OnRightClickPriorityLayer(RaycastHit raycastHit, int layerHit); // declare new delegate type
+        public event OnRightClickPriorityLayer notifyMouseRightClickObservers; // instantiate an observer set
 
 
         void Update() {
@@ -41,9 +44,14 @@ namespace RPG.CameraUI {
             var layerHit = priorityHit.Value.collider.gameObject.layer;
             NotifyObserersIfLayerChanged(layerHit);
 
-            // Notify delegates of highest priority game object under mouse when clicked
+            // Notify delegates of highest priority game object under mouse when LEFT-clicked
             if (Input.GetMouseButton(0)) {
                 notifyMouseClickObservers(priorityHit.Value, layerHit);
+            }
+
+            // Notify delegates of highest priority game object under mouse when RIGHT-clicked
+            if (Input.GetMouseButtonDown(1)) {
+                notifyMouseRightClickObservers(priorityHit.Value, layerHit);
             }
         }
 
