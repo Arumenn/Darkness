@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4108142705990810}
   - component: {fileID: 114451598364346622}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Audio Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

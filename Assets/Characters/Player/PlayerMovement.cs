@@ -28,17 +28,21 @@ namespace RPG.Characters {
 
         void OnMouseOverWalkable(Vector3 destination) {
             if (Input.GetMouseButton(0)) {
-                walkTarget.transform.position = destination;
-                aICharacterControl.SetTarget(walkTarget.transform);
+                WalkTo(destination);
             }
         }
 
         void OnMouseOverEnemy(Enemy enemy) {
             if ((Input.GetMouseButton(0)) || (Input.GetMouseButtonDown(1))) {
                 //walk to enemy
-                walkTarget.transform.position = enemy.transform.position;
-                aICharacterControl.SetTarget(walkTarget.transform);
+                WalkTo(enemy.transform.position);
             }
+        }
+
+        void WalkTo(Vector3 destinationPosition) {
+            //Vector3 pos = new Vector3(destinationPosition.x, 0f, destinationPosition.z);
+            walkTarget.transform.position = destinationPosition;
+            aICharacterControl.SetTarget(walkTarget.transform);
         }
 
 
