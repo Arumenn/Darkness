@@ -10,16 +10,11 @@ namespace RPG.Characters {
 
         [SerializeField] RawImage energyBarRawImage;
         [SerializeField] float maxEnergyPoints = 100f;
-        [SerializeField] float pointsPerHit = 10f;
 
-        CameraRaycaster cameraRaycaster = null;
         public float currentEnergyPoints;
 
         // Use this for initialization
         void Start() {
-            cameraRaycaster = Camera.main.GetComponent<CameraRaycaster>();
-            cameraRaycaster.onMouseOverEnemy += OnMouseOverEnemy;
-
             currentEnergyPoints = maxEnergyPoints;
         }
 
@@ -27,16 +22,18 @@ namespace RPG.Characters {
             UpdateEnergyBar();
         }
 
+        public bool IsEnergyAvailable(float amount) {
+            return amount <= currentEnergyPoints;
+        }
+
+        public void ConsumeEnergy(float amount) {
+            float newEnergyPoints = currentEnergyPoints - amount;
+            currentEnergyPoints = Mathf.Clamp(newEnergyPoints, 0, maxEnergyPoints);
+        }
+
         private void UpdateEnergyBar() {
             float xValue = -(EnergyAsPercent() / 2f) - 0.5f;
             energyBarRawImage.uvRect = new Rect(xValue, 0f, 0.5f, 1f);
-        }
-
-        void OnMouseOverEnemy(Enemy enemy) {
-            if (Input.GetMouseButtonDown(1)) {
-                float newEnergyPoints = currentEnergyPoints - pointsPerHit;
-                currentEnergyPoints = Mathf.Clamp(newEnergyPoints, 0, maxEnergyPoints);
-            }
         }
 
         float EnergyAsPercent() {

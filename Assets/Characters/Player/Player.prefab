@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 114719175567995022}
   - component: {fileID: 114766212432236440}
   - component: {fileID: 114121940887551386}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -815,7 +815,7 @@ MonoBehaviour:
   energyBarRawImage: {fileID: 114554911406356022, guid: 119bb858947478a44b3acca916ee68c8,
     type: 2}
   maxEnergyPoints: 100
-  pointsPerHit: 10
+  currentEnergyPoints: 0
 --- !u!114 &114548102328100600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -873,7 +873,9 @@ MonoBehaviour:
   damagePerHit: 50
   animatorOverrideController: {fileID: 22100000, guid: a040c0e902e0fa64badf967838363168,
     type: 2}
-  weaponInUse: {fileID: 11400000, guid: 08fe8d601c5df64418a67d2bebe1fa0a, type: 2}
+  weaponInUse: {fileID: 11400000, guid: 36e6d46b3f1d1424088578d83310847f, type: 2}
+  abilities:
+  - {fileID: 11400000, guid: 89f993a3b230be84cad3c125d3ceb7d9, type: 2}
 --- !u!114 &114780421226687874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -904,7 +906,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1263829147428764}
-  m_Material: {fileID: 13400000, guid: c2815a7ab32e42c4bb42f59caacb8ec1, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.3

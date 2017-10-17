@@ -2764,7 +2764,8 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: -277
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114178431248440770, guid: 119bb858947478a44b3acca916ee68c8, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 119bb858947478a44b3acca916ee68c8, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &207756026
@@ -22359,15 +22360,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1263829147428764, guid: 439d9f7468b775648823b1d6bb98a409, type: 2}
-      propertyPath: m_Layer
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 114766212432236440, guid: 439d9f7468b775648823b1d6bb98a409,
+    - target: {fileID: 136521261096472802, guid: 439d9f7468b775648823b1d6bb98a409,
         type: 2}
-      propertyPath: weaponInUse
+      propertyPath: m_Material
       value: 
-      objectReference: {fileID: 11400000, guid: 36e6d46b3f1d1424088578d83310847f,
+      objectReference: {fileID: 13400000, guid: c2815a7ab32e42c4bb42f59caacb8ec1,
         type: 2}
     - target: {fileID: 114121940887551386, guid: 439d9f7468b775648823b1d6bb98a409,
         type: 2}

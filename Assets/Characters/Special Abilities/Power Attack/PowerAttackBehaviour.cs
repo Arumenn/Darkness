@@ -13,7 +13,7 @@ namespace RPG.Characters {
 
         // Use this for initialization
         void Start() {
-
+            print("Power Attack Behaviour attached to " + gameObject);
         }
 
         // Update is called once per frame
@@ -21,8 +21,10 @@ namespace RPG.Characters {
 
         }
 
-        public void Use() {
-            throw new System.NotImplementedException();
+        public void Use(AbilityUseParams useParams) {
+            print("Power Attack used on " + useParams.target + " Damage: " + useParams.baseDamage + " + " + config.GetExtraDamage());
+            float damageToDeal = useParams.baseDamage + config.GetExtraDamage();
+            useParams.target.TakeDamage(damageToDeal);
         }
     }
 }
