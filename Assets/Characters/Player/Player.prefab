@@ -870,12 +870,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 8
   maxHealthPoints: 1000
-  damagePerHit: 50
+  baseDamage: 10
   animatorOverrideController: {fileID: 22100000, guid: a040c0e902e0fa64badf967838363168,
     type: 2}
   weaponInUse: {fileID: 11400000, guid: 36e6d46b3f1d1424088578d83310847f, type: 2}
   abilities:
   - {fileID: 11400000, guid: 89f993a3b230be84cad3c125d3ceb7d9, type: 2}
+  - {fileID: 11400000, guid: aae656d0fc322184fb6589c2f1248339, type: 2}
 --- !u!114 &114780421226687874
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -39,7 +39,7 @@ namespace RPG.Characters {
             RegisterForMouseClick();
             PutWeaponInHand();
             SetupRuntimeAnimator();
-            abilities[0].AttachComponentTo(gameObject);
+            AttachAbilities();
         }
 
         private void SetCurrentMaxHealth() {
@@ -80,16 +80,27 @@ namespace RPG.Characters {
                 AttackTarget(enemy);
             }else if ((Input.GetMouseButtonDown(1)) && (IsTargetInRange(enemy.gameObject))) {
                 AttempSpecialAbility(0, enemy);
+            }else if (Input.GetMouseButtonDown(2)) {
+                AttempSpecialAbility(1, enemy);
+            }
+        }
+
+        void AttachAbilities() {
+            foreach (SpecialAbility sa in abilities) {
+                sa.AttachComponentTo(gameObject);
             }
         }
 
         private void AttempSpecialAbility(int abilityIndex, Enemy enemy) {
+            print("Attempt Special Ability " + abilityIndex + " on " + enemy);
             var energyComponent = GetComponent<Energy>();
             SpecialAbility specialAbility = abilities[abilityIndex];
             if (energyComponent.IsEnergyAvailable(specialAbility.GetEnergyCost())) {
                 energyComponent.ConsumeEnergy(specialAbility.GetEnergyCost());
                 var abilityParams = new AbilityUseParams(enemy, baseDamage);
                 specialAbility.Use(abilityParams);
+            } else {
+                print("Not enough mana");
             }
         }
 
