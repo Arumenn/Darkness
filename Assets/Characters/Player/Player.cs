@@ -31,6 +31,9 @@ namespace RPG.Characters {
         CameraRaycaster cameraRaycaster;
         float lastHitTime = 0f;
 
+        const string ATTACK_TRIGGER = "Attack";
+        const string DEATH_TRIGGER = "Death";
+
         public float healthAsPercentage {
             get {
                 return currentHealthPoints / maxHealthPoints;
@@ -132,18 +135,17 @@ namespace RPG.Characters {
             //do damage
             if (Time.time - lastHitTime > weaponInUse.GetMinTimeBetweenHits()) {
                 transform.LookAt(enemy.transform);
-                animator.SetTrigger("Attack"); //TODO make const
+                animator.SetTrigger(ATTACK_TRIGGER);
                 enemy.TakeDamage(baseDamage);
                 lastHitTime = Time.time;
             }
         }        
 
         IEnumerator KillPlayer() {
+            animator.SetTrigger(DEATH_TRIGGER);
+
             audioSource.clip = deathSounds[UnityEngine.Random.Range(0, deathSounds.Length)];
             audioSource.Play();
-
-            Debug.Log("death anim");
-
             yield return new WaitForSecondsRealtime(audioSource.clip.length);
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
