@@ -15,6 +15,7 @@ namespace RPG.CameraUI {
         const float MAX_RAYCAST_DEPTH = 100f; // Hard coded value
 
         Camera mainCamera;
+        Rect screenRect;
 
         public delegate void OnMouseOverWalkable(Vector3 destination);
         public event OnMouseOverWalkable onMouseOverWalkable;
@@ -26,6 +27,8 @@ namespace RPG.CameraUI {
         }
 
         void Update() {
+            screenRect = new Rect(0, 0, Screen.width, Screen.height);
+
             // Check if pointer is over an interactable UI element
             if (EventSystem.current.IsPointerOverGameObject()) {
                 //Implement UI interaction
@@ -35,13 +38,16 @@ namespace RPG.CameraUI {
         }
 
         void PerformRaycasts() {
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            Debug.DrawRay(ray.origin, ray.direction * 10);
-            // Specify layer priorities below, order matters
-            if (RaycastForEnemy(ray)) { return; }
-            //if (RaycastForLootable(ray)) { return; }
-            if (RaycastForWalkable(ray)) { return; }
-            Cursor.SetCursor(unknownCursor, cursorHotspot, CursorMode.Auto);
+            //only if mouse in inside screen
+            if (screenRect.Contains(Input.mousePosition)) {
+                Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+                Debug.DrawRay(ray.origin, ray.direction * 10);
+                // Specify layer priorities below, order matters
+                if (RaycastForEnemy(ray)) { return; }
+                //if (RaycastForLootable(ray)) { return; }
+                if (RaycastForWalkable(ray)) { return; }
+                Cursor.SetCursor(unknownCursor, cursorHotspot, CursorMode.Auto);
+            }
         }
 
         bool RaycastForEnemy(Ray ray) {
