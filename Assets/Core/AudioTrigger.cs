@@ -13,6 +13,7 @@ public class AudioTrigger : MonoBehaviour {
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
         audioSource.clip = clip;
+        audioSource.volume = 0.2f;
 
         SphereCollider sphereCollider = gameObject.AddComponent<SphereCollider>();
         sphereCollider.isTrigger = true;
