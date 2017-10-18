@@ -815,6 +815,7 @@ MonoBehaviour:
   energyBarRawImage: {fileID: 114554911406356022, guid: 119bb858947478a44b3acca916ee68c8,
     type: 2}
   maxEnergyPoints: 100
+  regenPointsPerSecond: 10
   currentEnergyPoints: 0
 --- !u!114 &114548102328100600
 MonoBehaviour:
@@ -870,7 +871,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 8
   maxHealthPoints: 1000
-  baseDamage: 10
+  baseDamage: 12
   animatorOverrideController: {fileID: 22100000, guid: a040c0e902e0fa64badf967838363168,
     type: 2}
   weaponInUse: {fileID: 11400000, guid: 36e6d46b3f1d1424088578d83310847f, type: 2}
