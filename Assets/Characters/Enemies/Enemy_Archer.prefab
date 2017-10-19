@@ -894,7 +894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce7a80d520cacc042b5fe14f373d8173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MovingTurnSpeed: 1800
+  m_MovingTurnSpeed: 1000
   m_StationaryTurnSpeed: 900
   m_JumpPower: 6
   m_GravityMultiplier: 2
@@ -930,7 +930,8 @@ MonoBehaviour:
   chaseRadius: 3
   attackRadius: 10
   damagePerShot: 50
-  secondsBetweenShots: 2
+  firingPeriodInSeconds: 0.5
+  firingPeriodVariation: 0.1
   aimOffset: {x: 0, y: 1, z: 0}
   projectileToUse: {fileID: 1205257491965652, guid: f370340cd577af242b7ceb03659f7027,
     type: 2}
