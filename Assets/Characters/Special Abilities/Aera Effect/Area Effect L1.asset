@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: Area Effect L1
   m_EditorClassIdentifier: 
   energyCost: 25
-  extraDamage: 30
+  particlePrefab: {fileID: 1193207462121228, guid: f8431448ed437354ca09e724a1943a68,
+    type: 2}
+  damageToEachTarget: 10
   radius: 5

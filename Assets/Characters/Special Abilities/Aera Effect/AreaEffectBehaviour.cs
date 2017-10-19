@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RPG.Core;
+using System;
 
 namespace RPG.Characters {
     public class AreaEffectBehaviour : MonoBehaviour, ISpecialAbility {
 
         AreaEffectConfig config;
+        ParticleSystem myParticleSystem;
 
         public void SetConfig(AreaEffectConfig configToSet) {
             config = configToSet;
@@ -23,6 +25,11 @@ namespace RPG.Characters {
         }
 
         public void Use(AbilityUseParams useParams) {
+            DealRadialDamage(useParams);
+            PlayParticleEffect();
+        }
+
+        private void DealRadialDamage(AbilityUseParams useParams) {
             float damageToDeal = useParams.baseDamage + config.GetDamageToEachTarget();
             print("Area Effect used with a radius of " + config.GetRadius() + " Damage: " + useParams.baseDamage + " + " + config.GetDamageToEachTarget() + " = " + damageToDeal);
             //static sphere cast for targets around me
@@ -36,6 +43,13 @@ namespace RPG.Characters {
                 }
             }
             print("Area Effect used on " + count + " targets");
+        }
+
+        private void PlayParticleEffect() {
+            var prefab = Instantiate(config.GetParticlePrefab(), transform.position, Quaternion.identity);
+            myParticleSystem = prefab.GetComponent<ParticleSystem>();
+            myParticleSystem.Play();
+            Destroy(prefab, myParticleSystem.main.duration);
         }
     }
 }
