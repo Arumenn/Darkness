@@ -5,10 +5,10 @@ using UnityEngine.UI;
 using RPG.CameraUI;
 
 namespace RPG.Characters {
-    [RequireComponent(typeof(RawImage))]
+    [RequireComponent(typeof(Image))]
     public class Energy : MonoBehaviour {
 
-        [SerializeField] RawImage energyBarRawImage;
+        [SerializeField] Image energyOrb;
         [SerializeField] float maxEnergyPoints = 100f;
         [SerializeField] float regenPointsPerSecond = 10f;
 
@@ -44,8 +44,7 @@ namespace RPG.Characters {
         }
 
         private void UpdateEnergyBar() {
-            float xValue = -(EnergyAsPercent() / 2f) - 0.5f;
-            energyBarRawImage.uvRect = new Rect(xValue, 0f, 0.5f, 1f);
+            energyOrb.fillAmount = EnergyAsPercent();
         }
 
         float EnergyAsPercent() {

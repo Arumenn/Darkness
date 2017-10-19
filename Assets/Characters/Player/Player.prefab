@@ -893,7 +893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f875087112768ca49ac66da45bdaacb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyBarRawImage: {fileID: 114554911406356022, guid: 119bb858947478a44b3acca916ee68c8,
+  energyOrb: {fileID: 114778187928028618, guid: 119bb858947478a44b3acca916ee68c8,
     type: 2}
   maxEnergyPoints: 100
   regenPointsPerSecond: 10

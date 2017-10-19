@@ -12,10 +12,10 @@ namespace RPG.CameraUI {
         [SerializeField] Vector2 cursorHotspot = new Vector2(0, 0);
 
         const int WALKABLE_LAYER = 8;
-        const float MAX_RAYCAST_DEPTH = 100f; // Hard coded value
+        const float MAX_RAYCAST_DEPTH = 100f;
 
         Camera mainCamera;
-        Rect screenRect;
+        Rect screenRect = new Rect();
 
         public delegate void OnMouseOverWalkable(Vector3 destination);
         public event OnMouseOverWalkable onMouseOverWalkable;
