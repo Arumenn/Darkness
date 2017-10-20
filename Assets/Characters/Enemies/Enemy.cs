@@ -50,7 +50,7 @@ namespace RPG.Characters {
             if ((distanceToPlayer <= attackRadius) && (!isAttacking)) {
                 isAttacking = true;
                 float randomizedDelay = UnityEngine.Random.Range(firingPeriodInSeconds - firingPeriodVariation, firingPeriodInSeconds + firingPeriodVariation);
-                InvokeRepeating("FireProjectile", 0f, firingPeriodInSeconds); //TODO switch to Coroutines
+                InvokeRepeating("FireProjectile", 0f, randomizedDelay); //TODO switch to Coroutines
             }
             if (distanceToPlayer > attackRadius) {
                 CancelInvoke("FireProjectile");
@@ -85,6 +85,10 @@ namespace RPG.Characters {
             if (currentHealthPoints <= 0) {
                 Destroy(gameObject);
             }
+        }
+
+        public void Heal(float health) {
+            currentHealthPoints = Mathf.Clamp(currentHealthPoints + health, 0f, maxHealthPoints);
         }
 
         void OnDrawGizmos() {

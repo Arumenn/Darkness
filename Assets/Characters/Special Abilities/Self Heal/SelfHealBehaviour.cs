@@ -1,20 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RPG.Core;
+using System;
 
 namespace RPG.Characters {
-    public class PowerAttackBehaviour : MonoBehaviour, ISpecialAbility {
+    public class SelfHealBehaviour : MonoBehaviour, ISpecialAbility {
 
-        PowerAttackConfig config;
+        SelfHealConfig config;
         ParticleSystem myParticleSystem;
+        Player player = null;
+        AudioSource audioSource = null;
 
-        public void SetConfig(PowerAttackConfig configToSet) {
+
+        public void SetConfig(SelfHealConfig configToSet) {
             config = configToSet;
         }
 
         // Use this for initialization
         void Start() {
-
+            player = GetComponent<Player>();
+            audioSource = GetComponent<AudioSource>();
         }
 
         // Update is called once per frame
@@ -23,17 +29,24 @@ namespace RPG.Characters {
         }
 
         public void Use(AbilityUseParams useParams) {
-            DealPowerDamage(useParams);
+            DoSelfHeal(useParams);
+            PlaySound();
             PlayParticleEffect();
         }
 
-        private void DealPowerDamage(AbilityUseParams useParams) {
-            float damageToDeal = useParams.baseDamage + config.GetExtraDamage();
-            useParams.target.TakeDamage(damageToDeal);
+        private void DoSelfHeal(AbilityUseParams useParams) {
+            float pointsToHeal = config.GetHealingAmount();
+            player.Heal(pointsToHeal);
+        }
+
+        private void PlaySound() {
+            audioSource.clip = config.GetAudioClip();
+            audioSource.Play();
         }
 
         private void PlayParticleEffect() {
             var prefab = Instantiate(config.GetParticlePrefab(), transform.position, Quaternion.identity);
+            prefab.transform.parent = transform; //attach to player
             myParticleSystem = prefab.GetComponent<ParticleSystem>();
             myParticleSystem.Play();
             Destroy(prefab, myParticleSystem.main.duration);

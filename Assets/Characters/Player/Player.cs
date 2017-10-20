@@ -23,12 +23,13 @@ namespace RPG.Characters {
         [SerializeField] float maxHealthPoints = 100f;
         [SerializeField] float baseDamage = 10f;
         [SerializeField] Weapon weaponInUse;
-        [SerializeField] SpecialAbility[] abilities;
+        [SerializeField] AbilityConfig[] abilities;
 
         AudioSource audioSource;
         Animator animator;
-        float currentHealthPoints;
-        CameraRaycaster cameraRaycaster;
+        float currentHealthPoints = 0f;
+        CameraRaycaster cameraRaycaster = null;
+        Enemy currentEnemy = null;
         float lastHitTime = 0f;
 
         const string ATTACK_TRIGGER = "Attack";
@@ -49,10 +50,16 @@ namespace RPG.Characters {
             audioSource = GetComponent<AudioSource>();
         }
 
+        void Update() {
+            if (healthAsPercentage > Mathf.Epsilon) { //if alive
+                ScanForAbilityKeyDown();
+            }
+        }
+
         public void TakeDamage(float damage) {
-            ReduceHealth(damage);
-            bool playerDies = (currentHealthPoints <= 0);
-            if (playerDies) {
+            currentHealthPoints = Mathf.Clamp(currentHealthPoints - damage, 0f, maxHealthPoints);
+
+            if (currentHealthPoints <= 0) {
                 StartCoroutine(KillPlayer());
             } else {
                 audioSource.clip = hurtSounds[UnityEngine.Random.Range(0, hurtSounds.Length)];
@@ -60,8 +67,10 @@ namespace RPG.Characters {
             }
         }
 
-        private void ReduceHealth(float damage) {
-            currentHealthPoints = Mathf.Clamp(currentHealthPoints - damage, 0f, maxHealthPoints);
+        public void Heal(float health) {
+            currentHealthPoints = Mathf.Clamp(currentHealthPoints + health, 0f, maxHealthPoints);
+            //audioSource.clip = hurtSounds[UnityEngine.Random.Range(0, hurtSounds.Length)];
+            //audioSource.Play();
         }
 
         private void SetCurrentMaxHealth() {
@@ -98,28 +107,34 @@ namespace RPG.Characters {
         }
 
         void OnMouseOverEnemy(Enemy enemy) {
+            this.currentEnemy = enemy;
             if ((Input.GetMouseButton(0)) && (IsTargetInRange(enemy.gameObject))) {
                 AttackTarget(enemy);
             }else if ((Input.GetMouseButtonDown(1)) && (IsTargetInRange(enemy.gameObject))) {
-                AttempSpecialAbility(0, enemy);
-            }else if (Input.GetMouseButtonDown(2)) {
-                AttempSpecialAbility(1, enemy);
+                AttempSpecialAbility(0);                
+            }
+        }
+
+        private void ScanForAbilityKeyDown(){
+            for (int keyIndex = 1; keyIndex < abilities.Length; keyIndex++) {
+                if (Input.GetKeyDown(keyIndex.ToString())) {
+                    AttempSpecialAbility(keyIndex);
+                }
             }
         }
 
         void AttachAbilities() {
-            foreach (SpecialAbility sa in abilities) {
+            foreach (AbilityConfig sa in abilities) {
                 sa.AttachComponentTo(gameObject);
             }
         }
 
-        private void AttempSpecialAbility(int abilityIndex, Enemy enemy) {
-            print("Attempt Special Ability " + abilityIndex + " on " + enemy);
+        private void AttempSpecialAbility(int abilityIndex) {
             var energyComponent = GetComponent<Energy>();
-            SpecialAbility specialAbility = abilities[abilityIndex];
+            AbilityConfig specialAbility = abilities[abilityIndex];
             if (energyComponent.IsEnergyAvailable(specialAbility.GetEnergyCost())) {
                 energyComponent.ConsumeEnergy(specialAbility.GetEnergyCost());
-                var abilityParams = new AbilityUseParams(enemy, baseDamage);
+                var abilityParams = new AbilityUseParams(this.currentEnemy, baseDamage);
                 specialAbility.Use(abilityParams);
             } else {
                 print("Not enough mana");

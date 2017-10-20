@@ -14,8 +14,6 @@ namespace RPG.Characters {
 
         public float currentEnergyPoints;
 
-        float lastRegenTime = 0f;
-
         // Use this for initialization
         void Start() {
             currentEnergyPoints = maxEnergyPoints;
