@@ -23,6 +23,9 @@ namespace RPG.Characters {
         [SerializeField] float maxHealthPoints = 100f;
         [SerializeField] float baseDamage = 10f;
         [SerializeField] Weapon weaponInUse;
+        [Range(0.1f, 1.0f)] [SerializeField] float criticalHitChance = 0.1f;
+        [SerializeField] float criticalHitMultiplier = 1.25f;
+        [SerializeField] ParticleSystem criticalHitParticleSystem = null;
         [SerializeField] AbilityConfig[] abilities;
 
         AudioSource audioSource;
@@ -151,10 +154,21 @@ namespace RPG.Characters {
             if (Time.time - lastHitTime > weaponInUse.GetMinTimeBetweenHits()) {
                 transform.LookAt(enemy.transform);
                 animator.SetTrigger(ATTACK_TRIGGER);
-                enemy.TakeDamage(baseDamage);
+                enemy.TakeDamage(CalculateDamage());
                 lastHitTime = Time.time;
             }
         }        
+
+        private float CalculateDamage() {
+            float damage = baseDamage + weaponInUse.GetAdditionalDamage();
+            bool isCriticalHit = UnityEngine.Random.Range(0f, 1f) <= criticalHitChance;
+            if (isCriticalHit) {
+                print("CRITICAL HIT!");
+                damage = damage * criticalHitMultiplier;
+                criticalHitParticleSystem.Play();
+            }
+            return damage;
+        }
 
         IEnumerator KillPlayer() {
             animator.SetTrigger(DEATH_TRIGGER);
